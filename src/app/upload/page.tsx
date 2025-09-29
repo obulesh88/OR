@@ -1,5 +1,6 @@
 import { Upload } from 'lucide-react';
 import { UploadForm } from '@/components/UploadForm';
+import { Suspense } from 'react';
 
 export default function UploadPage() {
   return (
@@ -11,7 +12,9 @@ export default function UploadPage() {
           Submit your application to the store.
         </p>
       </div>
-      <UploadForm />
+      <Suspense>
+        <UploadForm />
+      </Suspense>
     </div>
   );
 }
