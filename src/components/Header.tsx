@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Search, Store, User } from 'lucide-react';
+import { Search, Store, User, Upload } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -19,6 +19,12 @@ export function Header() {
             <SearchInput />
         </div>
         <div className="flex items-center gap-2">
+          <Button variant="ghost" size="icon" asChild>
+            <Link href="/upload">
+              <Upload className="h-5 w-5" />
+              <span className="sr-only">Upload</span>
+            </Link>
+          </Button>
           <Button variant="ghost" size="icon" asChild>
             <Link href="/login">
               <User className="h-5 w-5" />
