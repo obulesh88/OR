@@ -1,6 +1,6 @@
 'use client';
 
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState, useFormStatus } from 'react';
 import { generateDescriptionAction, type State } from '@/app/generate-description/actions';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
 import { Label } from './ui/label';
@@ -31,7 +31,7 @@ function SubmitButton() {
 
 export function GenerateDescriptionForm() {
   const initialState: State = { message: null, errors: {} };
-  const [state, dispatch] = useFormState(generateDescriptionAction, initialState);
+  const [state, dispatch] = useActionState(generateDescriptionAction, initialState);
   const formRef = useRef<HTMLFormElement>(null);
   const { toast } = useToast();
 

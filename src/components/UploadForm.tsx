@@ -1,6 +1,6 @@
 'use client';
 
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState, useFormStatus } from 'react';
 import { uploadAppAction, type State } from '@/app/upload/actions';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -33,7 +33,7 @@ function SubmitButton() {
 
 export function UploadForm() {
     const initialState: State = { message: null, errors: {} };
-    const [state, dispatch] = useFormState(uploadAppAction, initialState);
+    const [state, dispatch] = useActionState(uploadAppAction, initialState);
     const formRef = useRef<HTMLFormElement>(null);
     const { toast } = useToast();
 
