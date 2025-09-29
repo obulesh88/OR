@@ -1,4 +1,5 @@
 import { Upload } from 'lucide-react';
+import { UploadForm } from '@/components/UploadForm';
 
 export default function UploadPage() {
   return (
@@ -10,10 +11,7 @@ export default function UploadPage() {
           Submit your application to the store.
         </p>
       </div>
-      {/* TODO: Add upload form */}
-      <div className="text-center text-muted-foreground">
-        <p>Upload form will be here.</p>
-      </div>
+      <UploadForm />
     </div>
   );
 }
