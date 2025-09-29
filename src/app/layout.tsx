@@ -6,7 +6,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: 'APKeasy',
+  title: 'OR Store',
   description: 'A fully-featured Android application store for distributing APK files.',
 };
 

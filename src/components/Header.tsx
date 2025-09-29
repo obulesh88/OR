@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Search, Store, User, Upload } from 'lucide-react';
+import { Search, Atom, User, Upload } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -12,8 +12,8 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-card shadow-sm">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2 font-bold text-lg text-primary">
-          <Store className="h-6 w-6" />
-          APKeasy
+          <Atom className="h-6 w-6" />
+          OR Store
         </Link>
         <div className="flex-1 px-8 max-w-md">
             <SearchInput />
