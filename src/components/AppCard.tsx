@@ -2,8 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import type { App } from '@/lib/types';
 import { Card, CardContent } from '@/components/ui/card';
-import { findImage, getCategoryById } from '@/lib/data';
-import { Badge } from './ui/badge';
+import { findImage } from '@/lib/data';
 
 interface AppCardProps {
   app: App;
@@ -11,7 +10,6 @@ interface AppCardProps {
 
 export function AppCard({ app }: AppCardProps) {
   const icon = findImage(app.iconUrl);
-  const category = getCategoryById(app.categoryId);
 
   return (
     <Link href={`/app/${app.slug}`} className="group block">
@@ -31,7 +29,6 @@ export function AppCard({ app }: AppCardProps) {
           )}
           <h3 className="font-headline font-semibold text-lg leading-tight truncate w-full">{app.title}</h3>
           <p className="text-sm text-muted-foreground mt-1">v{app.version}</p>
-          {category && <Badge variant="secondary" className="mt-2">{category.name}</Badge>}
         </CardContent>
       </Card>
     </Link>

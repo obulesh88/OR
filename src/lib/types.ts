@@ -8,11 +8,5 @@ export interface App {
   version: string;
   description: string;
   screenshots: ImagePlaceholder['id'][];
-  categoryId: string;
   downloadCount: number;
-}
-
-export interface Category {
-  id: string;
-  name: string;
 }
