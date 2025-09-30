@@ -7,10 +7,10 @@ initializePlaceholderImages();
 const APPS: App[] = [
     {
         id: "1",
-        slug: "pocket-money",
-        title: "Pocket Money",
+        slug: "inr-miner",
+        title: "INR MINER",
         version: "1.0.0",
-        description: "A simple and intuitive app to help you track your daily expenses and manage your personal budget. Keep an eye on your spending and save more with Pocket Money.",
+        description: "A simple and intuitive app to help you track your daily expenses and manage your personal budget. Keep an eye on your spending and save more with INR MINER.",
         iconUrl: "icon-pocket-money",
         screenshots: ["ss-pocket-money-1", "ss-pocket-money-2", "ss-pocket-money-3"],
         downloadCount: 12345,

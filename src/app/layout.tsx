@@ -6,7 +6,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: 'Pocket Money',
+  title: 'INR MINER',
   description: 'A simple app to track your expenses.',
 };
 
