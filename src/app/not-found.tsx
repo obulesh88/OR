@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from 'next/link'
@@ -7,7 +8,7 @@ import dynamic from 'next/dynamic'
 import { Suspense } from 'react';
 
 const SearchQueryDisplay = dynamic(
-  () => import('@/components/SearchQueryDisplay').then((mod) => mod.SearchQueryDisplay),
+  () => import('@/components/SearchQueryDisplay'),
   { ssr: false }
 )
 
@@ -17,7 +18,7 @@ export default function NotFound() {
       <Frown className="w-24 h-24 text-muted-foreground/50 mb-4" />
       <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">Page Not Found</h1>
       <p className="mt-4 text-lg text-muted-foreground">Sorry, we couldn’t find the page you’re looking for.</p>
-      <Suspense>
+      <Suspense fallback={null}>
         <SearchQueryDisplay />
       </Suspense>
       <Button asChild className="mt-6">
