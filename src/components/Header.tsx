@@ -34,7 +34,7 @@ export function Header() {
           OR Store
         </Link>
         <div className="flex-1 px-8 max-w-md">
-          <Suspense fallback={<div>Loading search...</div>}>
+          <Suspense>
             <SearchInput />
           </Suspense>
         </div>
