@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
-import { Suspense } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 
 export function Header() {
   return (
@@ -16,11 +16,11 @@ export function Header() {
           <svg
             version="1.0"
             xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
+            width="512pt"
+            height="512pt"
             viewBox="0 0 300.000000 300.000000"
             preserveAspectRatio="xMidYMid meet"
-            className="fill-current"
+            className="fill-current h-8 w-8"
           >
             <g
               transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)"
@@ -35,7 +35,7 @@ export function Header() {
         </Link>
         <div className="flex-1 px-8 max-w-md">
           <Suspense>
-            <SearchInput />
+            <SearchInputWrapper />
           </Suspense>
         </div>
         <div className="flex items-center gap-2">
@@ -57,6 +57,15 @@ export function Header() {
   );
 }
 
+function SearchInputWrapper() {
+  const pathname = usePathname();
+  // Only show search bar on the homepage for now
+  if (pathname !== '/') {
+      return null;
+  }
+  return <SearchInput />;
+}
+
 function SearchInput() {
     const searchParams = useSearchParams();
     const pathname = usePathname();
@@ -69,19 +78,8 @@ function SearchInput() {
         } else {
             params.delete('search');
         }
-        
-        // If we are not on the homepage, navigate to it for search
-        if (pathname !== '/') {
-            replace(`/?${params.toString()}`);
-        } else {
-            replace(`${pathname}?${params.toString()}`);
-        }
+        replace(`/?${params.toString()}`);
     }, 300);
-
-    // Only show search bar on the homepage for now
-    if (pathname !== '/') {
-        return null;
-    }
 
     return (
         <div className="relative">

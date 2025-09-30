@@ -42,17 +42,8 @@ function SubmitButton() {
 
   return (
     <>
-      {pending && (
-        <div className="w-full space-y-2 pt-2">
-          <Label>Uploading...</Label>
-          <div className="flex items-center gap-4">
-            <Progress value={uploadProgress} className="w-full" />
-            <p className="text-sm text-muted-foreground font-medium w-12 text-right">{uploadProgress}%</p>
-          </div>
-        </div>
-      )}
       <div className="flex justify-end pt-4">
-        <Button type="submit" disabled={pending}>
+        <Button type="submit" disabled={pending} className="w-full sm:w-auto">
             {pending ? (
                 <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -66,6 +57,15 @@ function SubmitButton() {
             )}
         </Button>
       </div>
+      {pending && (
+        <div className="w-full space-y-2 pt-4">
+          <Label>Uploading...</Label>
+          <div className="flex items-center gap-4">
+            <Progress value={uploadProgress} className="w-[calc(100%-3rem)]" />
+            <p className="text-sm text-muted-foreground font-medium w-12 text-right">{uploadProgress}%</p>
+          </div>
+        </div>
+      )}
     </>
   );
 }
@@ -96,14 +96,12 @@ export function UploadForm() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-            <div className="space-y-6">
-                <div className="space-y-2">
-                    <Label htmlFor="apk">APK File</Label>
-                    <Input id="apk" name="apk" type="file" accept=".apk" />
-                    {state?.errors?.apk && <p className="text-sm text-destructive">{state.errors.apk[0]}</p>}
-                </div>
-                <SubmitButton />
+            <div className="space-y-2">
+                <Label htmlFor="apk">APK File</Label>
+                <Input id="apk" name="apk" type="file" accept=".apk" />
+                {state?.errors?.apk && <p className="text-sm text-destructive">{state.errors.apk[0]}</p>}
             </div>
+            <SubmitButton />
         </CardContent>
       </form>
     </Card>
