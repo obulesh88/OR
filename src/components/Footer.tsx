@@ -8,9 +8,7 @@ export function Footer() {
           © {new Date().getFullYear()} OR Store. All rights reserved.
         </p>
         <div className="flex items-center gap-4">
-            <Link href="/generate-description" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                AI Description Generator
-            </Link>
+
         </div>
       </div>
     </footer>
