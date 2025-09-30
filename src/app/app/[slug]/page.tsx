@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { Download } from 'lucide-react';
+import { Download, IndianRupee } from 'lucide-react';
 import { getAppBySlug, findImage } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -20,25 +20,18 @@ export default function AppDetailPage({ params }: { params: { slug: string } }) 
     notFound();
   }
 
-  const icon = findImage(app.iconUrl);
+  const icon = app.iconUrl ? findImage(app.iconUrl) : null;
 
   return (
     <div className="container mx-auto max-w-4xl px-4 py-8">
       <Card>
         <CardContent className="p-6 md:p-8">
           <header className="flex flex-col sm:flex-row gap-6">
-            {icon && (
-              <div className="flex-shrink-0">
-                <Image
-                  src={icon.imageUrl}
-                  alt={`${app.title} icon`}
-                  width={128}
-                  height={128}
-                  data-ai-hint={icon.imageHint}
-                  className="rounded-3xl w-32 h-32 mx-auto sm:mx-0 shadow-lg object-cover"
-                />
+            <div className="flex-shrink-0">
+              <div className="w-32 h-32 mx-auto sm:mx-0 rounded-3xl shadow-lg bg-primary/10 flex items-center justify-center">
+                 <IndianRupee className="w-20 h-20 text-primary" />
               </div>
-            )}
+            </div>
             <div className="flex-1 flex flex-col justify-center text-center sm:text-left">
               <h1 className="text-4xl font-headline font-bold">{app.title}</h1>
               <p className="text-lg text-muted-foreground mt-1">Version {app.version}</p>
