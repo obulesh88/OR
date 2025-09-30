@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { User, Upload } from 'lucide-react';
+import { User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 function HeaderLogo() {
@@ -36,12 +36,6 @@ export function Header() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <HeaderLogo />
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" asChild>
-            <Link href="/upload">
-              <Upload className="h-5 w-5" />
-              <span className="sr-only">Upload</span>
-            </Link>
-          </Button>
           <Button variant="ghost" size="icon" asChild>
             <Link href="/login">
               <User className="h-5 w-5" />
