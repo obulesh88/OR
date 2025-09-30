@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
+import { Suspense } from 'react';
 
 export function Header() {
   return (
@@ -33,7 +34,9 @@ export function Header() {
           OR Store
         </Link>
         <div className="flex-1 px-8 max-w-md">
+          <Suspense fallback={<div>Loading search...</div>}>
             <SearchInput />
+          </Suspense>
         </div>
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="icon" asChild>
