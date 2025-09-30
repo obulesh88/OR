@@ -5,17 +5,14 @@ import { addApp } from '@/lib/data';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
+// Since we are not getting details from the form, we'll just check for the file.
+// In a real app, you would process the file here.
 const FormSchema = z.object({
-  title: z.string().min(1, 'Title is required.'),
-  version: z.string().min(1, 'Version is required.'),
-  description: z.string().min(1, 'Description is required.'),
+  apk: z.any().optional(),
 });
 
 export type State = {
   errors?: {
-    title?: string[];
-    version?: string[];
-    description?: string[];
     _form?: string[];
   };
   message?: string | null;
@@ -26,24 +23,25 @@ export async function uploadAppAction(
   formData: FormData
 ): Promise<State> {
   const validatedFields = FormSchema.safeParse({
-    title: formData.get('title'),
-    version: formData.get('version'),
-    description: formData.get('description'),
+    apk: formData.get('apk'),
   });
 
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Invalid input. Please check the fields.',
+      message: 'Invalid input.',
     };
   }
 
   try {
-    const newApp = addApp(validatedFields.data);
+    // In a real app, you would parse the APK here to get app details.
+    // For now, we'll use some placeholder data.
+    const newApp = addApp({
+        title: `New App ${Date.now()}`,
+        version: '1.0.0',
+        description: 'This is a newly uploaded app.',
+    });
     
-    // In a real app, you would handle file uploads here (APK, icon, screenshots)
-    // and save them to a file storage, then save the URLs to the database.
-
   } catch (e: any) {
     return {
       message: `An error occurred: ${e.message}`,
@@ -51,8 +49,6 @@ export async function uploadAppAction(
     };
   }
 
-  // Revalidate the home page to show the new app
   revalidatePath('/');
-  // Redirect to the new app's page
   redirect(`/`);
 }
