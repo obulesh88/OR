@@ -40,7 +40,7 @@ export function Header() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <HeaderLogo />
         <div className="flex-1 px-8 max-w-md">
-          <Suspense>
+          <Suspense fallback={null}>
             <SearchInputWrapper />
           </Suspense>
         </div>
@@ -74,8 +74,8 @@ function SearchInputWrapper() {
 
 function SearchInput() {
     const searchParams = useSearchParams();
-    const pathname = usePathname();
     const { replace } = useRouter();
+    const pathname = usePathname();
 
     const handleSearch = useDebouncedCallback((term: string) => {
         const params = new URLSearchParams(searchParams);
@@ -84,7 +84,7 @@ function SearchInput() {
         } else {
             params.delete('search');
         }
-        replace(`/?${params.toString()}`);
+        replace(`${pathname}?${params.toString()}`);
     }, 300);
 
     return (
