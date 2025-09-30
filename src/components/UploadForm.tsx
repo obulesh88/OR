@@ -9,6 +9,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  CardFooter
 } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -69,10 +70,10 @@ export function UploadForm() {
               <p className="text-sm text-destructive">{state.errors.apk[0]}</p>
             )}
           </div>
-          <div className="flex justify-end pt-4">
-            <SubmitButton />
-          </div>
         </CardContent>
+        <CardFooter className="flex justify-end">
+            <SubmitButton />
+        </CardFooter>
       </form>
     </Card>
   );
