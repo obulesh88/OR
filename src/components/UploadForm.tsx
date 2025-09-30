@@ -1,6 +1,7 @@
 'use client';
 
-import { useActionState } from 'react';
+import { useActionState, useEffect, useRef, useState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { uploadAppAction, type State } from '@/app/upload/actions';
 import {
   Card,
@@ -13,12 +14,10 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { UploadCloud, Loader2 } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Progress } from '@/components/ui/progress';
-import { useFormStatus } from 'react-dom';
 
-function UploadFormContent() {
+function UploadFormContent({ errors }: { errors?: { apk?: string[] } }) {
   const { pending } = useFormStatus();
   const [uploadProgress, setUploadProgress] = useState(0);
 
@@ -63,6 +62,7 @@ function UploadFormContent() {
         <div className="space-y-2">
           <Label htmlFor="apk">APK File</Label>
           <Input id="apk" name="apk" type="file" accept=".apk" disabled={pending} />
+          {errors?.apk && <p className="text-sm text-destructive">{errors.apk[0]}</p>}
         </div>
 
         {pending && (
@@ -90,7 +90,7 @@ export function UploadForm() {
   const { toast } = useToast();
 
   useEffect(() => {
-    if (state?.message && state.errors?._form) {
+    if (state?.message && (state.errors?._form || state.errors?.apk)) {
       toast({
         variant: 'destructive',
         title: 'Submission Failed',
@@ -108,7 +108,7 @@ export function UploadForm() {
             Select your application's APK file to submit it to the store.
           </CardDescription>
         </CardHeader>
-        <UploadFormContent />
+        <UploadFormContent errors={state?.errors} />
       </form>
     </Card>
   );

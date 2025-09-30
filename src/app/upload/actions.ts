@@ -5,14 +5,15 @@ import { addApp } from '@/lib/data';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-// Since we are not getting details from the form, we'll just check for the file.
-// In a real app, you would process the file here.
 const FormSchema = z.object({
-  apk: z.any().optional(),
+  apk: z
+    .any()
+    .refine((file) => file?.size > 0, 'Please select a file.')
 });
 
 export type State = {
   errors?: {
+    apk?: string[];
     _form?: string[];
   };
   message?: string | null;
@@ -29,7 +30,7 @@ export async function uploadAppAction(
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Invalid input.',
+      message: 'Invalid input. Please select an APK file.',
     };
   }
 
