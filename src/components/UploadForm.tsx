@@ -65,9 +65,9 @@ export function UploadForm() {
             clearInterval(interval);
             return 95;
           }
-          return prev + 5;
+          return prev + 10;
         });
-      }, 100);
+      }, 50);
     } else {
       setUploadProgress(0);
     }
