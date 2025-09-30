@@ -5,7 +5,20 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Frown } from 'lucide-react'
 import { Suspense } from 'react';
-import { SearchQueryDisplay } from '@/components/SearchQueryDisplay';
+import { useSearchParams } from 'next/navigation';
+
+function SearchQueryDisplay() {
+  const searchParams = useSearchParams();
+  const query = searchParams.get("search");
+
+  if (!query) {
+    return null;
+  }
+
+  return (
+    <p className="mt-4 text-lg text-muted-foreground">You searched for: {query}</p>
+  );
+}
 
 export default function NotFound() {
   return (
