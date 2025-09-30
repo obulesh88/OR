@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Download, Star } from 'lucide-react';
 import { getAppBySlug, findImage } from '@/lib/data';
 import { Button } from '@/components/ui/button';
@@ -51,10 +52,12 @@ export default function AppDetailPage({ params }: { params: { slug: string } }) 
                   <span>{app.downloadCount.toLocaleString()} downloads</span>
                 </div>
               </div>
-              <Button size="lg" className="mt-6 w-full sm:w-auto bg-accent text-accent-foreground hover:bg-accent/90 self-center sm:self-start">
-                <Download className="mr-2 h-5 w-5" />
-                Download APK
-              </Button>
+              <a href="https://drive.google.com/uc?export=download&id=17mFofQmYmqTEeVBSW5efMtnHEPj2pcJP" download>
+                <Button size="lg" className="mt-6 w-full sm:w-auto bg-accent text-accent-foreground hover:bg-accent/90 self-center sm:self-start">
+                  <Download className="mr-2 h-5 w-5" />
+                  Download APK
+                </Button>
+              </a>
             </div>
           </header>
 
