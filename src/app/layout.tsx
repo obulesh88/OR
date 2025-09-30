@@ -6,8 +6,8 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: 'OR Store',
-  description: 'A fully-featured Android application store for distributing APK files.',
+  title: 'Pocket Money',
+  description: 'A simple app to track your expenses.',
 };
 
 export default function RootLayout({

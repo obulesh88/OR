@@ -33,7 +33,7 @@ export async function uploadAppAction(
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Invalid input. Please select an APK file.',
+      message: 'Invalid input. Please select a file.',
     };
   }
 
@@ -41,9 +41,9 @@ export async function uploadAppAction(
     // In a real app, you would parse the APK here to get app details.
     // For now, we'll use some placeholder data.
     const newApp = addApp({
-        title: `New App ${Date.now()}`,
+        title: `New Transaction ${Date.now()}`,
         version: '1.0.0',
-        description: 'This is a newly uploaded app.',
+        description: 'This is a newly uploaded transaction.',
     });
     
     // Simulate processing time so the progress bar is visible
