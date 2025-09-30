@@ -7,9 +7,6 @@ import { Input } from '@/components/ui/input';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 import { Suspense } from 'react';
-import dynamic from 'next/dynamic';
-
-const DynamicSearchInput = dynamic(() => Promise.resolve(SearchInput), { ssr: false });
 
 function HeaderLogo() {
   return (
@@ -72,7 +69,7 @@ function SearchInputWrapper() {
   if (pathname !== '/') {
       return null;
   }
-  return <DynamicSearchInput />;
+  return <SearchInput />;
 }
 
 function SearchInput() {

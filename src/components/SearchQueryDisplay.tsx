@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 
 export function SearchQueryDisplay() {
   const searchParams = useSearchParams();
-  const query = searchParams.get("q");
+  const query = searchParams.get("search");
 
   if (!query) {
     return null;

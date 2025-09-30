@@ -4,13 +4,8 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Frown } from 'lucide-react'
-import dynamic from 'next/dynamic'
 import { Suspense } from 'react';
-
-const SearchQueryDisplay = dynamic(
-  () => import('@/components/SearchQueryDisplay'),
-  { ssr: false }
-)
+import { SearchQueryDisplay } from '@/components/SearchQueryDisplay';
 
 export default function NotFound() {
   return (
