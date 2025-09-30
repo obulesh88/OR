@@ -3,7 +3,6 @@ import Image from 'next/image';
 import { Download } from 'lucide-react';
 import { getAppBySlug, findImage } from '@/lib/data';
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
 import { Card, CardContent } from '@/components/ui/card';
 
 export function generateStaticParams() {
@@ -36,7 +35,7 @@ export default function AppDetailPage({ params }: { params: { slug: string } }) 
                   width={128}
                   height={128}
                   data-ai-hint={icon.imageHint}
-                  className="rounded-3xl w-32 h-32 mx-auto sm:mx-0 shadow-lg"
+                  className="rounded-3xl w-32 h-32 mx-auto sm:mx-0 shadow-lg object-cover"
                 />
               </div>
             )}
