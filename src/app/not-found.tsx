@@ -1,10 +1,14 @@
 "use client";
 
-import { Suspense } from "react";
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Frown } from 'lucide-react'
-import { SearchQueryDisplay } from "@/components/SearchQueryDisplay";
+import dynamic from 'next/dynamic'
+
+const SearchQueryDisplay = dynamic(
+  () => import('@/components/SearchQueryDisplay').then((mod) => mod.SearchQueryDisplay),
+  { ssr: false }
+)
 
 export default function NotFound() {
   return (
@@ -12,9 +16,7 @@ export default function NotFound() {
       <Frown className="w-24 h-24 text-muted-foreground/50 mb-4" />
       <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">Page Not Found</h1>
       <p className="mt-4 text-lg text-muted-foreground">Sorry, we couldn’t find the page you’re looking for.</p>
-      <Suspense fallback={null}>
-        <SearchQueryDisplay />
-      </Suspense>
+      <SearchQueryDisplay />
       <Button asChild className="mt-6">
         <Link href="/">Go back home</Link>
       </Button>
