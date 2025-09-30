@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState, useEffect, useRef, useState } from 'react';
+import { useActionState, useEffect, useRef } from 'react';
 import { useFormStatus } from 'react-dom';
 import { uploadAppAction, type State } from '@/app/upload/actions';
 import {
@@ -15,58 +15,24 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { UploadCloud, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { Progress } from '@/components/ui/progress';
 
 function SubmitButton() {
   const { pending } = useFormStatus();
-  const [uploadProgress, setUploadProgress] = useState(0);
-
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (pending) {
-      setUploadProgress(0); // Reset progress on new submission
-      interval = setInterval(() => {
-        setUploadProgress((prev) => {
-          if (prev >= 95) {
-            clearInterval(interval);
-            return 95; // Stop at 95% to wait for server response
-          }
-          return prev + 5;
-        });
-      }, 50); // Faster interval for quicker feedback
-    } else {
-      setUploadProgress(0);
-    }
-    return () => clearInterval(interval);
-  }, [pending]);
 
   return (
-    <>
-      <div className="flex justify-end pt-4">
-        <Button type="submit" disabled={pending} className="w-full sm:w-auto">
-            {pending ? (
-                <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Submitting...
-                </>
-            ) : (
-                <>
-                <UploadCloud className="mr-2 h-4 w-4" />
-                Submit App
-                </>
-            )}
-        </Button>
-      </div>
-      {pending && (
-        <div className="w-full space-y-2 pt-4">
-          <Label>Uploading...</Label>
-          <div className="flex items-center gap-4">
-            <Progress value={uploadProgress} className="w-[calc(100%-3rem)]" />
-            <p className="text-sm text-muted-foreground font-medium w-12 text-right">{uploadProgress}%</p>
-          </div>
-        </div>
+    <Button type="submit" disabled={pending} className="w-full sm:w-auto">
+      {pending ? (
+        <>
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          Submitting...
+        </>
+      ) : (
+        <>
+          <UploadCloud className="mr-2 h-4 w-4" />
+          Submit App
+        </>
       )}
-    </>
+    </Button>
   );
 }
 
@@ -96,12 +62,16 @@ export function UploadForm() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-            <div className="space-y-2">
-                <Label htmlFor="apk">APK File</Label>
-                <Input id="apk" name="apk" type="file" accept=".apk" />
-                {state?.errors?.apk && <p className="text-sm text-destructive">{state.errors.apk[0]}</p>}
-            </div>
+          <div className="space-y-2">
+            <Label htmlFor="apk">APK File</Label>
+            <Input id="apk" name="apk" type="file" accept=".apk" />
+            {state?.errors?.apk && (
+              <p className="text-sm text-destructive">{state.errors.apk[0]}</p>
+            )}
+          </div>
+          <div className="flex justify-end pt-4">
             <SubmitButton />
+          </div>
         </CardContent>
       </form>
     </Card>
