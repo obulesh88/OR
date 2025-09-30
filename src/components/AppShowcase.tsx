@@ -30,12 +30,6 @@ export function AppShowcase({ apps, searchQuery }: AppShowcaseProps) {
       ) : (
         <div className="text-center py-16">
             <h2 className="text-2xl font-semibold">No apps found</h2>
-            <p className="text-muted-foreground mt-2">
-                Try adjusting your search for &quot;{searchQuery}&quot;.
-            </p>
-            <Button asChild variant="link" className="mt-4">
-                <Link href="/">Clear search</Link>
-            </Button>
         </div>
       )}
     </div>

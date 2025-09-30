@@ -1,12 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { Search, User, Upload } from 'lucide-react';
+import { User, Upload } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useDebouncedCallback } from 'use-debounce';
-import { Suspense } from 'react';
 
 function HeaderLogo() {
   return (
@@ -40,9 +36,6 @@ export function Header() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <HeaderLogo />
         <div className="flex-1 px-8 max-w-md">
-          <Suspense fallback={null}>
-            <SearchInputWrapper />
-          </Suspense>
         </div>
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="icon" asChild>
@@ -61,42 +54,4 @@ export function Header() {
       </div>
     </header>
   );
-}
-
-function SearchInputWrapper() {
-  const pathname = usePathname();
-  // Only show search bar on the homepage for now
-  if (pathname !== '/') {
-      return null;
-  }
-  return <SearchInput />;
-}
-
-function SearchInput() {
-    const searchParams = useSearchParams();
-    const { replace } = useRouter();
-    const pathname = usePathname();
-
-    const handleSearch = useDebouncedCallback((term: string) => {
-        const params = new URLSearchParams(searchParams);
-        if (term) {
-            params.set('search', term);
-        } else {
-            params.delete('search');
-        }
-        replace(`${pathname}?${params.toString()}`);
-    }, 300);
-
-    return (
-        <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-                type="search"
-                placeholder="Search for apps..."
-                className="pl-10 w-full"
-                onChange={(e) => handleSearch(e.target.value)}
-                defaultValue={searchParams.get('search')?.toString()}
-            />
-        </div>
-    );
 }
