@@ -1,14 +1,13 @@
 'use client';
 
 import { useActionState } from 'react';
-import { useFormStatus } from 'react-dom';
 import { uploadAppAction, type State } from '@/app/upload/actions';
 import {
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
 } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -17,10 +16,32 @@ import { UploadCloud, Loader2 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Progress } from '@/components/ui/progress';
+import { useFormStatus } from 'react-dom';
 
-function SubmitButton() {
+function UploadFormContent() {
   const { pending } = useFormStatus();
-  return (
+  const [uploadProgress, setUploadProgress] = useState(0);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (pending) {
+      setUploadProgress(0); // Reset progress on new submission
+      interval = setInterval(() => {
+        setUploadProgress((prev) => {
+          if (prev >= 95) {
+            clearInterval(interval);
+            return 95; // Stop at 95% to wait for server response
+          }
+          return prev + 5;
+        });
+      }, 50); // Faster interval for quicker feedback
+    } else {
+      setUploadProgress(0);
+    }
+    return () => clearInterval(interval);
+  }, [pending]);
+
+  const SubmitButton = () => (
     <Button type="submit" disabled={pending}>
       {pending ? (
         <>
@@ -35,6 +56,31 @@ function SubmitButton() {
       )}
     </Button>
   );
+
+  return (
+    <CardContent>
+      <div className="space-y-6">
+        <div className="space-y-2">
+          <Label htmlFor="apk">APK File</Label>
+          <Input id="apk" name="apk" type="file" accept=".apk" disabled={pending} />
+        </div>
+
+        {pending && (
+          <div className="space-y-2 pt-2">
+            <Label>Uploading...</Label>
+            <div className="flex items-center gap-4">
+              <Progress value={uploadProgress} className="w-full" />
+              <p className="text-sm text-muted-foreground font-medium w-12 text-right">{uploadProgress}%</p>
+            </div>
+          </div>
+        )}
+
+        <div className="flex justify-end pt-4">
+          <SubmitButton />
+        </div>
+      </div>
+    </CardContent>
+  );
 }
 
 export function UploadForm() {
@@ -42,8 +88,6 @@ export function UploadForm() {
   const [state, dispatch] = useActionState(uploadAppAction, initialState);
   const formRef = useRef<HTMLFormElement>(null);
   const { toast } = useToast();
-  const { pending } = useFormStatus();
-  const [uploadProgress, setUploadProgress] = useState(0);
 
   useEffect(() => {
     if (state?.message && state.errors?._form) {
@@ -55,25 +99,6 @@ export function UploadForm() {
     }
   }, [state, toast]);
 
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (pending) {
-      setUploadProgress(0); // Reset progress on new submission
-      interval = setInterval(() => {
-        setUploadProgress((prev) => {
-          if (prev >= 95) {
-            clearInterval(interval);
-            return 95; // Stop at 95% to wait for server response
-          }
-          return prev + 5; // Slower increment for better visual effect
-        });
-      }, 100); // Slower interval
-    } else {
-      setUploadProgress(0);
-    }
-    return () => clearInterval(interval);
-  }, [pending]);
-
   return (
     <Card>
       <form ref={formRef} action={dispatch}>
@@ -83,28 +108,7 @@ export function UploadForm() {
             Select your application's APK file to submit it to the store.
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="apk">APK File</Label>
-              <Input id="apk" name="apk" type="file" accept=".apk" disabled={pending} />
-            </div>
-
-            {pending && (
-              <div className="space-y-2 pt-2">
-                <Label>Uploading...</Label>
-                <div className="flex items-center gap-4">
-                    <Progress value={uploadProgress} className="w-full" />
-                    <p className="text-sm text-muted-foreground font-medium w-12 text-right">{uploadProgress}%</p>
-                </div>
-              </div>
-            )}
-
-            <div className="flex justify-end pt-4">
-              <SubmitButton />
-            </div>
-          </div>
-        </CardContent>
+        <UploadFormContent />
       </form>
     </Card>
   );
