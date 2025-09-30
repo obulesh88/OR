@@ -1,11 +1,9 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import Link from 'next/link';
-import { Download, Star } from 'lucide-react';
+import { Download } from 'lucide-react';
 import { getAppBySlug, findImage } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { ScreenshotCarousel } from '@/components/ScreenshotCarousel';
 import { Card, CardContent } from '@/components/ui/card';
 
 export function generateStaticParams() {
@@ -24,13 +22,12 @@ export default function AppDetailPage({ params }: { params: { slug: string } }) 
   }
 
   const icon = findImage(app.iconUrl);
-  const screenshots = app.screenshots.map(id => findImage(id)).filter(Boolean) as NonNullable<ReturnType<typeof findImage>>[];
 
   return (
     <div className="container mx-auto max-w-4xl px-4 py-8">
       <Card>
         <CardContent className="p-6 md:p-8">
-          <header className="flex flex-col sm:flex-row gap-6 mb-8">
+          <header className="flex flex-col sm:flex-row gap-6">
             {icon && (
               <div className="flex-shrink-0">
                 <Image
@@ -60,22 +57,6 @@ export default function AppDetailPage({ params }: { params: { slug: string } }) 
               </a>
             </div>
           </header>
-
-          <Separator className="my-8" />
-
-          {screenshots.length > 0 && (
-            <section className="mb-8">
-                <h2 className="text-2xl font-headline font-semibold mb-4">Screenshots</h2>
-                <ScreenshotCarousel screenshots={screenshots} />
-            </section>
-          )}
-
-          <section>
-            <h2 className="text-2xl font-headline font-semibold mb-4">Description</h2>
-            <div className="prose prose-lg max-w-none text-foreground/80">
-              <p>{app.description}</p>
-            </div>
-          </section>
         </CardContent>
       </Card>
     </div>
