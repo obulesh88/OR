@@ -1,6 +1,5 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { App } from '@/lib/types';
 import { AppCard } from './AppCard';
@@ -8,12 +7,10 @@ import { Button } from './ui/button';
 
 interface AppShowcaseProps {
   apps: App[];
+  searchQuery?: string;
 }
 
-export function AppShowcase({ apps }: AppShowcaseProps) {
-  const searchParams = useSearchParams();
-  const searchQuery = searchParams.get('search');
-
+export function AppShowcase({ apps, searchQuery }: AppShowcaseProps) {
   const filteredApps = apps.filter((app) => {
     const searchMatch =
       !searchQuery ||
@@ -34,7 +31,7 @@ export function AppShowcase({ apps }: AppShowcaseProps) {
         <div className="text-center py-16">
             <h2 className="text-2xl font-semibold">No apps found</h2>
             <p className="text-muted-foreground mt-2">
-                Try adjusting your search.
+                Try adjusting your search for &quot;{searchQuery}&quot;.
             </p>
             <Button asChild variant="link" className="mt-4">
                 <Link href="/">Clear search</Link>
