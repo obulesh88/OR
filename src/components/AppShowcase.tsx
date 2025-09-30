@@ -1,29 +1,19 @@
 'use client';
 
-import Link from 'next/link';
 import { App } from '@/lib/types';
 import { AppCard } from './AppCard';
-import { Button } from './ui/button';
 
 interface AppShowcaseProps {
   apps: App[];
-  searchQuery?: string;
 }
 
-export function AppShowcase({ apps, searchQuery }: AppShowcaseProps) {
-  const filteredApps = apps.filter((app) => {
-    const searchMatch =
-      !searchQuery ||
-      app.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      app.description.toLowerCase().includes(searchQuery.toLowerCase());
-    return searchMatch;
-  });
+export function AppShowcase({ apps }: AppShowcaseProps) {
 
   return (
     <div>
-      {filteredApps.length > 0 ? (
+      {apps.length > 0 ? (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-6">
-          {filteredApps.map((app) => (
+          {apps.map((app) => (
             <AppCard key={app.id} app={app} />
           ))}
         </div>
