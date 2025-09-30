@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState, useEffect, useRef } from 'react';
+import { useActionState, useEffect, useRef, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { uploadAppAction, type State } from '@/app/upload/actions';
 import {
@@ -16,6 +16,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { UploadCloud, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { Progress } from '@/components/ui/progress';
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -42,6 +43,8 @@ export function UploadForm() {
   const [state, dispatch] = useActionState(uploadAppAction, initialState);
   const formRef = useRef<HTMLFormElement>(null);
   const { toast } = useToast();
+  const { pending } = useFormStatus();
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     if (state?.message && (state.errors?._form || state.errors?.apk)) {
@@ -53,6 +56,24 @@ export function UploadForm() {
     }
   }, [state, toast]);
 
+  useEffect(() => {
+    if (pending) {
+      let interval = setInterval(() => {
+        setProgress(prev => {
+          if (prev >= 95) {
+            clearInterval(interval);
+            return prev;
+          }
+          return prev + 5;
+        });
+      }, 100);
+      return () => clearInterval(interval);
+    } else {
+      setProgress(0);
+    }
+  }, [pending]);
+
+
   return (
     <Card>
       <form ref={formRef} action={dispatch}>
@@ -63,11 +84,20 @@ export function UploadForm() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-2">
-            <Label htmlFor="apk">APK File</Label>
-            <Input id="apk" name="apk" type="file" accept=".apk" />
-            {state?.errors?.apk && (
-              <p className="text-sm text-destructive">{state.errors.apk[0]}</p>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="apk">APK File</Label>
+              <Input id="apk" name="apk" type="file" accept=".apk" disabled={pending} />
+              {state?.errors?.apk && (
+                <p className="text-sm text-destructive">{state.errors.apk[0]}</p>
+              )}
+            </div>
+            {pending && (
+              <div className="space-y-2">
+                <Label>Upload Progress</Label>
+                <Progress value={progress} className="w-full" />
+                <p className="text-sm text-muted-foreground text-center">{progress}%</p>
+              </div>
             )}
           </div>
         </CardContent>

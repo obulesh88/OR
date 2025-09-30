@@ -19,6 +19,9 @@ export type State = {
   message?: string | null;
 };
 
+// Helper function to simulate a delay
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 export async function uploadAppAction(
   prevState: State,
   formData: FormData
@@ -43,6 +46,9 @@ export async function uploadAppAction(
         description: 'This is a newly uploaded app.',
     });
     
+    // Simulate processing time so the progress bar is visible
+    await sleep(2000);
+
   } catch (e: any) {
     return {
       message: `An error occurred: ${e.message}`,
