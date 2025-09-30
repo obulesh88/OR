@@ -23,7 +23,7 @@ export function AppCard({ app }: AppCardProps) {
                 width={96}
                 height={96}
                 data-ai-hint={icon.imageHint}
-                className="rounded-2xl object-cover shadow-md"
+                className="rounded-2xl shadow-md"
               />
             </div>
           )}

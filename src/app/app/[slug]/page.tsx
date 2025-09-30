@@ -39,7 +39,7 @@ export default function AppDetailPage({ params }: { params: { slug: string } }) 
                   width={128}
                   height={128}
                   data-ai-hint={icon.imageHint}
-                  className="rounded-3xl object-cover w-32 h-32 mx-auto sm:mx-0 shadow-lg"
+                  className="rounded-3xl w-32 h-32 mx-auto sm:mx-0 shadow-lg"
                 />
               </div>
             )}
