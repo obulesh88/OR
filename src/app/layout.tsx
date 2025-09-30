@@ -5,8 +5,6 @@ import { Toaster } from '@/components/ui/toaster';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 
-export const dynamic = 'force-dynamic'
-
 export const metadata: Metadata = {
   title: 'OR Store',
   description: 'A fully-featured Android application store for distributing APK files.',
